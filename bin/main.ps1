@@ -74,6 +74,18 @@ Function ConvertTo-DataTable {
     return $table | Sort-Object -Property sAMAccountName
 }
 
+Function Export-DataTableFile() {
+    Param(
+        [Parameter(Mandatory=$true)]
+        [System.String]$FileName,
+        [Parameter(Mandatory=$true)]
+        [System.Collections.ArrayList]$ArrayList
+    )
+    $timestamp = Get-Date -Format "yyyyMMdd.HHmm"
+    $csvFilePath = "./data/output/${timestamp}_${FileName}.csv"
+    $dataTable = ConvertTo-DataTable -ArrayList $ArrayList
+    $dataTable | Export-Csv -Path $csvFilePath -NoTypeInformation
+}
 Function Main() {
     Param(
         [Parameter(Mandatory = $true)]
@@ -106,13 +118,9 @@ Function Main() {
     }
 
     if ($ExportToFile) {
-        $FileName="HR_All"
-        $timestamp = Get-Date -Format "yyyyMMdd.HHmm"
-        $csvFilePath = "./data/output/${timestamp}_${FileName}.csv"
-        $dataTable = ConvertTo-DataTable -ArrayList $HRObject
-        $dataTable | Export-Csv -Path $csvFilePath -NoTypeInformation
+        Export-DataTableFile -FileName "HR_All" -ArrayList $HRObject
     }
-    return $dataTable
+    return 0
 }
 
 # Inputs
