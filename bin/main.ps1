@@ -86,6 +86,19 @@ Function Export-DataTableFile() {
     $dataTable = ConvertTo-DataTable -ArrayList $ArrayList
     $dataTable | Export-Csv -Path $csvFilePath -NoTypeInformation
 }
+
+Function Confirm-DeleteStatus() {
+    Param(
+        [Parameter(Mandatory=$true)]
+        [System.Array]$MSPData,
+        [Parameter(Mandatory=$true)]
+        [System.Collections.ArrayList]$HRData
+    )
+    foreach ($samAccountName in $MSPData) {
+        
+    }
+}
+
 Function Main() {
     Param(
         [Parameter(Mandatory = $true)]
