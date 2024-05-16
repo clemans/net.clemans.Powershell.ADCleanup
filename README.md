@@ -80,8 +80,6 @@ For a manual deployment, follow the below instructions and prerequisites.
 
 - Install the latest version of [Powershell][powershell-url].
 
-- Powershell
-
 ```powershell
   PS /home/$USER/> ./bin/main.ps1
 ```
