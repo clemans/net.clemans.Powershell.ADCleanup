@@ -87,15 +87,16 @@ Function Export-DataTableFile() {
     $dataTable | Export-Csv -Path $csvFilePath -NoTypeInformation
 }
 
-Function Confirm-DeleteStatus() {
+Function Confirm-UserDeleteStatus() {
     Param(
         [Parameter(Mandatory=$true)]
-        [System.Array]$MSPData,
+        [System.Collections.ArrayList]$Source,
         [Parameter(Mandatory=$true)]
-        [System.Collections.ArrayList]$HRData
+        [System.Array]$SamAccountNames
     )
-    foreach ($samAccountName in $MSPData) {
-        
+    foreach ($samAccountName in $SamAccountNames) {
+       $User =  $Source | Where-Object { $_.sAMAccountName -eq $samAccountName }
+       ($User.Exists && !$User.Enabled) ? $user.SamAccountName : $samAccountName
     }
 }
 
@@ -112,6 +113,7 @@ Function Main() {
     $samAccountNames = @{}
     $fullNames = @{}
 
+    $HRData  = Import-Csv $HRFile
     foreach ($hrAccount in $HRFile) {
         $samAccountNames[$hrAccount] = (Get-SamAccountNameFromCsv -User $hrAccount)
         $fullNames[$hrAccount] = (Get-FullNameFromCsv -User $hrAccount)
@@ -129,17 +131,17 @@ Function Main() {
             Write-Debug "`nsAMAccountName: ${sAMAccountName}`nFullName: ${fullName}`nExists: ${exists}`nStatus: ${enabled}`n"
         }
     }
-
+    $MSPData = Get-Content $MSPFile
+    Confirm-UserDeleteStatus -
     if ($ExportToFile) {
         Export-DataTableFile -FileName "HR_All" -ArrayList $HRObject
     }
-    return 0
 }
 
 # Inputs
 $_args = @{
-    HRFile       = $(Import-Csv ".\data\input\Employee Roster 3.26.24.csv")
-    MSPFile      = $(Get-Content ".\data\input\userprofiles.txt")
+    HRFile       = ".\data\input\Employee Roster 3.26.24.csv"
+    MSPFile      = ".\data\input\userprofiles.txt"
     ExportToFile = $true
     Debug        = $true
 }
