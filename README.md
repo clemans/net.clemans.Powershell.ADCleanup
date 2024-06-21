@@ -81,7 +81,7 @@ For a manual deployment, follow the below instructions and prerequisites.
 - Install the latest version of [Powershell][powershell-url].
 
 ```powershell
-  PS /home/$USER/> ./bin/main.ps1
+  PS /home/$USER/> ./bin/entrypoint.ps1
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -107,9 +107,9 @@ If you have a suggestion that would make this better, please fork the repo & cre
 You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
-1. Create your Feature Branch (`git checkout -b feature/jira-issue`)
+1. Create your Feature Branch (`git checkout -b feature/itil-issue-number`)
 2. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-3. Push to the Branch (`git push origin feature/jira-issue`)
+3. Push to the Branch (`git push origin feature/itil-issue-number`)
 4. Open a Pull Request
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
